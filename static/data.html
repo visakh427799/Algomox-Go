@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
    <link href="/static/style.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
    <style>
        body{
   background-color: rgb(243, 240, 240);
@@ -15,79 +17,76 @@
 h1{
     color: rgb(20, 7, 77);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: 50px;
 }
 
 p{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.box_table{
-    width:500px;
+ .box_table{
+    width:700px;
+    margin: auto;
 }
 
 .box_table table {
   padding-top: 30px;
-  margin: auto;
-}
-.box_table table thead td {
-  text-align: center;
-  
-  color:rgb(255, 255, 255);
-  background-color: #140636;
-}
-
-.box_table table td {
-  width: 250px;
-  height: 50px;
  
-  text-align: center;
-  color: #686868;
 }
-
    </style>
 </head>
-<body>
-    <div class="">
-     <h1>Air <span style="color:orangered">go</span></h1>
+<body onload="myFunction()">
+    <div class="navbar">
+     <h1>Air <span style="color:orangered;">go</span></h1>
+     <a href="/" style="color:orangered;margin-right: 100px;text-decoration: none;">Back</a>
 
     </div>
     <div class="box">
         
         
-        <dv class="box_table">
+        <div class="box_table">
 
         
             
           {{if .}}
-     <h4> <span style="color:rgb(253, 61, 2);margin-left: 400px;">{{(index . 2).Airport.Name }}</span></h4>
+     <h6 class="text-center">Airport Name:  <span style="color:rgb(253, 61, 2)">{{(index . 2).Airport.Name }}</span></h6>
 
-            <table >
             
-                <thead id="tbl">
-
-                <td> Total Flights</td>
-                <td> Total Minutes Delayed</td>
-                <td>Time Label</td>
-                
-                
+<div class="pt-4">
+              <table class="table table-dark table-striped ">
+                <thead class="table-dark">
+                    <td class="text-center"> Total Flights</td>
+                    <td class="text-center"> Total Minutes Delayed</td>
+                    <td class="text-center">Time Label</td>
                 </thead>
                 <tbody>
-                 
-                     {{range .}}
+                    {{range .}}
                      <tr>
-                      <td>{{.Statistics.Flights.Total}}</td>
-                      <td>{{.Statistics.Flights.Delayed}}</td>
-                      <td>{{.Time.Label}}</td>
+                      <td class="text-center">{{.Statistics.Flights.Total}}</td>
+                      <td class="text-center">{{.Statistics.Flights.Delayed}}</td>
+                      <td class="text-center">{{.Time.Label}}</td>
 
                      </tr>
 
 
                      {{end}}
-                 
                 </tbody>
-              </table>  
+              </table>
+
+            </div>
+
+            <nav aria-label="...">
+                <ul class="pagination pagination-lg">
+                  <li class="page-item active" aria-current="page">
+                    <span class="page-link">1</span>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                </ul>
+              </nav>
               {{end}}
         </dv>
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 </html>

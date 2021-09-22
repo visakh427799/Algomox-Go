@@ -142,8 +142,11 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
     for i := 0; i < len(airlines); i++ {
 		if airlines[i].Airport.Code == airport{
 			count=count+1
-			
+			if count<10 {
 			airports_fitered=append(airports_fitered,airlines[i])
+              
+			}
+			
 		}
 	}
 	for i := 0; i < len(airports_fitered); i++ {
