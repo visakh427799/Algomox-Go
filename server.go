@@ -10,9 +10,7 @@ import (
 		"encoding/json"
 		"io"
 		"io/ioutil"
-
-		
-		
+		// "github.com/joho/godotenv"
 )
 
 
@@ -149,17 +147,11 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	for i := 0; i < len(airports_fitered); i++ {
-
-		// tr=tr+` <tr>
-		// 	<td>{{ .Airport.Code}}</td>
-		// 	<td>{{ .Airport.Name}}</td>
-		// 	<td>{{ .Time.Label}}</td>
-		 
-		//   </tr>`
-		fmt.Println(airports_fitered[i].Airport.Code)
-		fmt.Println(airports_fitered[i].Airport.Name)
-		fmt.Println(airports_fitered[i].Time.Label)	
+		// fmt.Println(airports_fitered[i].Airport.Code)
+		// fmt.Println(airports_fitered[i].Airport.Name)
+		// fmt.Println(airports_fitered[i].Time.Label)	
 	}
+	
 	defer jsonFile.Close()
 	    tr:=airports_fitered
         fp := path.Join("static", "data.html")
@@ -199,7 +191,9 @@ func main() {
 		Title  string
 		Author string
 	}
-
+	os.Setenv("PORT", "8081")
+	port:=os.Getenv("PORT")
+	fmt.Println(os.Getenv("PORT"))
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		book := Book{"hii", "hello"}
         fp := path.Join("static", "index.html")
@@ -217,6 +211,6 @@ func main() {
     http.HandleFunc("/readAirport", uploadHandler)
 
 
-    log.Fatal(http.ListenAndServe(":8081", nil))
+    log.Fatal(http.ListenAndServe(":"+port, nil))
 
 }
