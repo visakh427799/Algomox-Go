@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+   <link href="/static/style.css" rel="stylesheet">
+   <style>
+       body{
+  background-color: rgb(243, 240, 240);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+h1{
+    color: rgb(20, 7, 77);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.box_table{
+    width:500px;
+}
+
+.box_table table {
+  padding-top: 30px;
+  margin: auto;
+}
+.box_table table thead td {
+  text-align: center;
+  
+  color:rgb(255, 255, 255);
+  background-color: #140636;
+}
+
+.box_table table td {
+  width: 250px;
+  height: 50px;
+ 
+  text-align: center;
+  color: #686868;
+}
+
+   </style>
+</head>
+<body>
+    <div class="">
+     <h1>Air <span style="color:orangered">go</span></h1>
+
+    </div>
+    <div class="box">
+        
+        
+        <dv class="box_table">
+
+        
+            
+          {{if .}}
+     <h4> <span style="color:rgb(253, 61, 2);margin-left: 400px;">{{(index . 2).Airport.Name }}</span></h4>
+
+            <table >
+            
+                <thead id="tbl">
+
+                <td> Total Flights</td>
+                <td> Total Minutes Delayed</td>
+                <td>Time Label</td>
+                
+                
+                </thead>
+                <tbody>
+                 
+                     {{range .}}
+                     <tr>
+                      <td>{{.Airport.Code}}</td>
+                      <td>{{.Statistics.Flights.Delayed}}</td>
+                      <td>{{.Statistics.Flights.Total}}</td>
+
+                     </tr>
+
+
+                     {{end}}
+                 
+                </tbody>
+              </table>  
+              {{end}}
+        </dv>
+    </div>
+</body>
+</html>
