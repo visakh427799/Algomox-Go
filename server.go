@@ -10,9 +10,9 @@ import (
 		"encoding/json"
 		"io"
 		"io/ioutil"
-		// "github.com/joho/godotenv"
+		"strconv"
+		
 )
-
 
 type Airlines []struct {
 	Airport struct {
@@ -54,8 +54,6 @@ type Airlines []struct {
 		}
 	} `json:"Statistics"`
 }
-
-//array for storing filtered airports
 
 type Airports_fitered []struct {
 	Airport struct {
@@ -102,8 +100,6 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	// Maximum upload of 10 MB files
 	r.ParseMultipartForm(10 << 20)
 
-	// Get handler for filename, size and headers
-	airport :=r.FormValue("code")
 	file, handler, err := r.FormFile("filename")
 	if err != nil {
 		fmt.Println("Error Retrieving the File")
@@ -122,12 +118,32 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Copy the uploaded file to the created file on the filesystem
+	
 	if _, err := io.Copy(dst, file); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	jsonFile, err := os.Open("airlines.json")
+		http.Redirect(w, r, "/", http.StatusFound)
+}
+func uploadHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		
+	case "POST":
+
+		uploadFile(w, r)
+
+	}
+}
+
+func readAirportHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		airport :=r.FormValue("code")
+		filenm:=r.FormValue("filename")
+		pagenum:=r.FormValue("pagenum")
+		pagenumber, err:= strconv.Atoi(pagenum)
+		jsonFile, err := os.Open(filenm)
 	
     if err != nil {
 		fmt.Println(err)
@@ -136,27 +152,31 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
     var airlines Airlines
 	 
 	json.Unmarshal(byteValue, &airlines)
-    count :=0
+    
 	
 	var airports_fitered Airports_fitered
+	
     for i := 0; i < len(airlines); i++ {
 		if airlines[i].Airport.Code == airport{
-			count=count+1
-			if count<10 {
-			airports_fitered=append(airports_fitered,airlines[i])
-              
-			}
 			
+			
+				airports_fitered=append(airports_fitered,airlines[i])
+			
+				
 		}
 	}
-	for i := 0; i < len(airports_fitered); i++ {
-		// fmt.Println(airports_fitered[i].Airport.Code)
-		// fmt.Println(airports_fitered[i].Airport.Name)
-		// fmt.Println(airports_fitered[i].Time.Label)	
+	var airports_pagewise Airports_fitered
+	
+	for i :=pagenumber*10-10; i < pagenumber*10; i++ {
+		
+	     if (i<len(airports_fitered)){
+			airports_pagewise=append(airports_pagewise,airports_fitered[i])
+
+		 }
+		
 	}
 	
-	defer jsonFile.Close()
-	    tr:=airports_fitered
+	    tr:=airports_pagewise
         fp := path.Join("static", "data.html")
 		tmpl, err := template.ParseFiles(fp)
 		// 
@@ -169,25 +189,8 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-
-
-}
-
-
-
-
-func uploadHandler(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case "GET":
-		
-	case "POST":
-
-		uploadFile(w, r)
-
 	}
 }
-	
-
 
 func main() {
 	type Book struct {
@@ -211,9 +214,7 @@ func main() {
 		}
     })
 
-    http.HandleFunc("/readAirport", uploadHandler)
-
-
+    http.HandleFunc("/fileupload", uploadHandler)
+	http.HandleFunc("/readAirport", readAirportHandler)
     log.Fatal(http.ListenAndServe(":"+port, nil))
-
 }

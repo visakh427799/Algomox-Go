@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+   <link href="/static/style.css" rel="stylesheet">
+   <style>
+       body{
+  background-color: rgb(243, 240, 240);
+}
+h1{
+    color: rgb(20, 7, 77);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.box{
+  max-width:400px;
+  height: 250px;
+  margin: auto;
+  background-color: rgb(19, 6, 51);
+  border-radius: 8px;
+}
+.box .box_form{
+    max-width: 300px;
+    margin: auto;
+    padding-top:5px;
+   
+}
+
+.box .box_form .box_form_name input{
+    width:300px;
+    height:40px;
+    border-style: hidden;
+    border-radius: 9px;
+    background-color: rgb(245, 245, 245);
+    padding-left: 20px;
+
+
+   
+}
+.box .box_form .box_form_file button{
+   
+    border-style: hidden;
+  width: 320px;
+  height: 40px;
+  background-color: rgb(245, 245, 245);
+  color: rgb(19, 4, 4);
+  border-radius: 5px;
+  font-size: 15px;
+}
+.box .box_form .box_form_submit input{
+  background-color:orangered;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  width:100px;
+  height:40px;
+  border-style: hidden;
+  margin-left: 100px;
+  margin-top: 10px;
+  color: white;
+   
+}
+p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.box_table{
+    width:500px;
+}
+
+.box_table table {
+  padding-top: 30px;
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.box_table table thead td {
+  text-align: center;
+  
+  color:rgb(255, 255, 255);
+  background-color: #140636;
+}
+
+.box_table table td {
+  width: 250px;
+  height: 50px;
+ 
+  text-align: center;
+  color: #686868;
+}
+
+   </style>
+</head>
+<body>
+    <div class="">
+     <h1>Air <span style="color:orangered">go</span></h1>
+    </div>
+    <div class="box">
+        <h6>Upload the file</h6>
+        <div class="box_form">
+            <form method="POST" action="/readAirport" enctype='multipart/form-data'>
+                
+                <div class="box_form_file">
+                 <p style="color:white">Select file</p>
+
+                <button><input type="file" name="filename"  required></button>
+                
+                </div>
+                <div class="box_form_submit">
+                    <input type="submit" value="Upload">
+                </div>
+            </form>  
+        </div>
+
+        <!--  -->
+    </div>
+</body>
+</html>

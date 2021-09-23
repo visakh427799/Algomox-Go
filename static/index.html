@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
    <link href="/static/style.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
    <style>
        body{
   background-color: rgb(243, 240, 240);
@@ -13,6 +16,7 @@
 h1{
     color: rgb(20, 7, 77);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    float:left;
 }
 .box{
   max-width:400px;
@@ -24,7 +28,7 @@ h1{
 .box .box_form{
     max-width: 300px;
     margin: auto;
-    padding-top:5px;
+    padding-top:25px;
    
 }
 
@@ -94,22 +98,47 @@ p{
    </style>
 </head>
 <body>
-    <div class="">
-     <h1>Air <span style="color:orangered">go</span></h1>
+
+  
+    <div class="navB">
+     <!-- <h1>Air <span style="color:orangered">go</span></h1> -->
+     <div class="container " style="margin: 30px;">
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Upload a file</button>
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Upload a file</h4>
+
+            </div>
+            <form method="POST" action="/fileupload" enctype='multipart/form-data'>
+
+            <div class="modal-body">
+             <input class="form-control form-control-lg"type="file" name="filename"  required>
+              <input class="btn btn-success " type="submit" value="Load" style="margin-top:10px">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
     <div class="box">
         <div class="box_form">
-            <form method="POST" action="/readAirport" enctype='multipart/form-data'>
+            <form method="GET" action="/readAirport">
                 <div class="box_form_name">
                  <p style="color:white">Enter airport code</p>
                 <input type="text" name="code" placeholder="Enter airport code" required>
                 </div>
-                <div class="box_form_file">
-                 <p style="color:white">Select file</p>
-
-                <button><input type="file" name="filename"  required></button>
-                
-                </div>
+                <div class="box_form_name">
+                  <p style="color:white">Enter file name</p>
+                 <input type="text" name="filename" placeholder="Enter filename" required>
+                 </div>
+                 <input type="text" name="pagenum" id="pgnum" value="1" hidden>
                 <div class="box_form_submit">
                     <input type="submit" value="Load">
                 </div>
@@ -118,5 +147,7 @@ p{
 
         <!--  -->
     </div>
+
+   
 </body>
 </html>
