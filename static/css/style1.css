@@ -5,6 +5,7 @@ h1{
     color: rgb(20, 7, 77);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     float:left;
+    padding-left:20px;
 }
 .box{
   max-width:400px;
@@ -12,12 +13,14 @@ h1{
   margin: auto;
   background-color: rgb(19, 6, 51);
   border-radius: 8px;
+ 
 }
 .box .box_form{
     max-width: 300px;
     margin: auto;
     padding-top:25px;
-   
+    margin-top: 40px;
+    
 }
 
 .box .box_form .box_form_name input{
@@ -84,4 +87,9 @@ p{
  
   text-align: center;
   color: #686868;
+}
+.upload{
+  max-width: 100px;
+  padding-top:50px;
+
 }
