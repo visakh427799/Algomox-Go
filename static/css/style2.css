@@ -1,0 +1,18 @@
+body {
+  background-color: rgb(243, 240, 240);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+h1 {
+  color: rgb(20, 7, 77);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 50px;
+}
+
+p {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.box_table {
+  width: 500px;
+  margin: auto;
+}

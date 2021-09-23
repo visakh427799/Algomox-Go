@@ -5,57 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-   <link href="/static/style.css" rel="stylesheet">
+    <link href="static/css/style2.css" rel="stylesheet" />
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-
-   <style>
-       body{
-  background-color: rgb(243, 240, 240);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-}
-h1{
-    color: rgb(20, 7, 77);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-left: 50px;
-}
-
-p{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
- .box_table{
-    width:500px;
-  
-    margin: auto;
-}
-
-
-   </style>
 </head>
 <body>
     <div class="navbar">
      <h1>Air <span style="color:orangered;">go</span></h1>
      <a href="/" style="color:orangered;margin-right: 100px;text-decoration: none;">Back</a>
-
     </div>
     <div class="box">
-        
-        
         <div class="box_table">
-
-        
-            
           {{if .}}
-     <h6 class="text-center">Airport Name:  <span style="color:rgb(253, 61, 2)">{{(index . 0).Airport.Name }}</span></h6>
-
-            
+     <h6 class="text-center">Airport Name:  <span style="color:rgb(253, 61, 2)">{{(index . 0).Airport.Name }}</span></h6>    
 <div class="pt-2">
               <table class="table table-dark table-striped ">
                 <thead class="table-dark">
                     <td class="text-center"> Total Flights</td>
                     <td class="text-center"> Total Minutes Delayed</td>
-                    <td class="text-center">Time Label</td>
+                    <td class="text-center"><div class="dropdown show">
+                        <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         Time label
+                        </a>
+                      
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <a class="dropdown-item" onclick="Sort(1)">Ascending</a>
+                          <a class="dropdown-item" onclick="Sort(0)">Descending</a>
+                         
+                        </div>
+                      </div></td>
                 </thead>
                 <tbody>
                     {{range .}}
@@ -95,26 +72,26 @@ p{
                   let code=urlParams.get('code')
                   let filename=urlParams.get('filename')
                   let page=urlParams.get('pagenum')
-                  return {code,filename,page}
+                  let sort=urlParams.get('sort')
+                  return {code,filename,page,sort}
                 }
-
-
                 const pg=(pagenumber)=>{
                     var obj=currentPage()
                     var code=obj.code;
                     var filename=obj.filename;
+                    let sort=obj.sort
                     console.log(obj)
-                    
-                location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}`
-                    
+                    location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}&sort=${sort}`
                 }
                   const next=()=>{
                     var obj=currentPage()
                     var code=obj.code;
                     var filename=obj.filename;
                     var pagenumber=obj.page;
+                    let sort=obj.sort
                     pagenumber=Number(pagenumber)+1
-                    location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}`
+                    location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}&sort=${sort}`
+
                     
                  }
                  const prev=()=>{
@@ -122,10 +99,27 @@ p{
                     var code=obj.code;
                     var filename=obj.filename;
                     var pagenumber=obj.page;
+                    let sort=obj.sort
                     pagenumber=Number(pagenumber)-1
                     location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}`
                      
                    }
+                const Sort=(value)=>{
+
+                    var obj=currentPage()
+                    var code=obj.code;
+                    var filename=obj.filename;
+                    var pagenumber=obj.page;
+                  if(value==1){
+                    location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}&sort=${value}`
+
+                  }
+                  else if(value==0){
+                    location.href=`/readAirport?code=${code}&filename=${filename}&pagenum=${pagenumber}&sort=${value}`
+                  }
+
+
+                }   
               </script>
 
             </div>
@@ -136,6 +130,8 @@ p{
         </dv>
     </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </html>

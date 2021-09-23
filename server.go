@@ -142,6 +142,7 @@ func readAirportHandler(w http.ResponseWriter, r *http.Request) {
 		airport :=r.FormValue("code")
 		filenm:=r.FormValue("filename")
 		pagenum:=r.FormValue("pagenum")
+		sort:=r.FormValue("sort")
 		pagenumber, err:= strconv.Atoi(pagenum)
 		jsonFile, err := os.Open(filenm)
 	
@@ -155,27 +156,51 @@ func readAirportHandler(w http.ResponseWriter, r *http.Request) {
     
 	
 	var airports_fitered Airports_fitered
-	
-    for i := 0; i < len(airlines); i++ {
-		if airlines[i].Airport.Code == airport{
-			
-			
-				airports_fitered=append(airports_fitered,airlines[i])
-			
+
+	if(sort=="1"){
+		for i := 0; i < len(airlines); i++ {
+			if airlines[i].Airport.Code == airport{
 				
+				
+					airports_fitered=append(airports_fitered,airlines[i])
+				
+					
+			}
+		}
+	}else{
+		for i :=len(airlines)-1; i >= 0; i-- {
+			if airlines[i].Airport.Code == airport{
+				
+				
+					airports_fitered=append(airports_fitered,airlines[i])
+				
+					
+			}
 		}
 	}
+	
+    
 	var airports_pagewise Airports_fitered
-	
-	for i :=pagenumber*10-10; i < pagenumber*10; i++ {
-		
-	     if (i<len(airports_fitered)){
-			airports_pagewise=append(airports_pagewise,airports_fitered[i])
 
-		 }
+	if(sort=="1"){
+        for i :=pagenumber*10-10; i < pagenumber*10; i++ {
 		
+			if (i<len(airports_fitered)){
+			   airports_pagewise=append(airports_pagewise,airports_fitered[i])
+   
+			}
+		   
+	   }
+	}else{
+		for i :=pagenumber*10; i > pagenumber*10-10; i-- {
+		
+			if (i<len(airports_fitered)){
+			   airports_pagewise=append(airports_pagewise,airports_fitered[i])
+   
+			}
+		   
+	   }
 	}
-	
 	    tr:=airports_pagewise
         fp := path.Join("static", "data.html")
 		tmpl, err := template.ParseFiles(fp)
@@ -214,7 +239,10 @@ func main() {
 		}
     })
 
-    http.HandleFunc("/fileupload", uploadHandler)
+    http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	
+	http.HandleFunc("/fileupload", uploadHandler)
 	http.HandleFunc("/readAirport", readAirportHandler)
+	
     log.Fatal(http.ListenAndServe(":"+port, nil))
 }
