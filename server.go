@@ -183,22 +183,21 @@ func readAirportHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 func main() {
-	type Book struct {
+	type Heading struct {
 		Title  string
-		Author string
 	}
-	// os.Setenv("PORT", "8081")
+	os.Setenv("PORT", "8081")
 	port:=os.Getenv("PORT")
 	fmt.Println(os.Getenv("PORT"))
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		book := Book{"hii", "hello"}
+		title := Heading{"Airgo"}
         fp := path.Join("static", "index.html")
 		tmpl, err := template.ParseFiles(fp)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		if err := tmpl.Execute(w,book); err != nil {
+		if err := tmpl.Execute(w,title); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
     })
